@@ -1,13 +1,12 @@
 package com.example.loft;
 
+import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.CreateBucketRequest;
-import com.amazonaws.services.s3.model.GetBucketLocationRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +28,14 @@ public class S3Example {
 
 	public boolean createBucket(String bucketName){
         if ( this.client == null ){
+
+            //ClientConfiguration clientConf = new ClientConfiguration();
+            //clientConf.setProxyHost("192.168.3.2");
+            //clientConf.setProxyPort(10080);
+            
             client = AmazonS3ClientBuilder.standard()
                 .withEndpointConfiguration(new EndpointConfiguration(endpoint, region))
+                //.withClientConfiguration(clientConf)
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretAccessKey)))
                 .build();
         }
